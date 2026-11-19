@@ -4,6 +4,7 @@ Deep Learning (D6421), Sesi 06-07
 
 ## Isi
 
+- [Laporan akhir (PDF)](reports/TUGAS_DL_SESI07_2802524000_Gerald_Adli.pdf) berisi hasil eksperimen dan pembahasan Q1–Q6.
 - [Notebook Colab](Generative_Models_Colab.ipynb) berisi eksperimen yang sudah dijalankan beserta metrik dan lima visualisasi.
 - [Skrip PyTorch](src/) mencakup persiapan data, definisi model, pelatihan, evaluasi, analisis classifier, dan visualisasi.
 - [requirements.txt](requirements.txt) mencantumkan dependensi untuk menjalankan skrip.
