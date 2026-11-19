@@ -45,21 +45,50 @@ Perubahan konfigurasi menghasilkan folder run baru. Interupsi pada konfigurasi y
 dapat dilanjutkan dari checkpoint terakhir apabila checkpoint tersebut tersedia.
 DDPM menggunakan 1.000 langkah reverse diffusion; FID DDPM dapat memerlukan waktu lama.
 
-## Menjalankan skrip modular
+## Menjalankan skrip modular di Windows
 
-Gunakan pasangan PyTorch/torchvision yang cocok untuk CUDA pada mesin tujuan.
-Pertahankan pasangan bawaan Colab ketika memakai notebook.
+Buka PowerShell di folder repositori yang berisi `requirements.txt` dan `src/`.
+Jika belum memiliki salinan lokal, jalankan perintah berikut.
 
-```bash
-pip install -r requirements.txt
-python -m src.train
-python -m src.evaluate
-python -m src.mlp_analysis
-python -m src.figures
+```powershell
+git clone https://github.com/geraldadli/Take-Home-DL.git
+Set-Location Take-Home-DL
 ```
 
-Default skrip adalah full. Untuk smoke, set environment variable `STUDY_PROFILE=smoke`.
-Skrip menyimpan checkpoint, metrik, dan visualisasi di `generative_models_runs/`.
+Buat lingkungan virtual Python 3.12 dan instal dependensi.
+
+```powershell
+py -3.12 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+```
+
+Untuk pelatihan dengan GPU NVIDIA, pasang pasangan PyTorch dan torchvision
+yang sesuai di lingkungan virtual melalui [panduan instalasi PyTorch](https://pytorch.org/get-started/locally/).
+Periksa apakah PyTorch mendeteksi CUDA.
+
+```powershell
+.\.venv\Scripts\python.exe -c "import torch; print(torch.cuda.is_available())"
+```
+
+Mulai dengan mode `smoke` untuk memeriksa alur pelatihan, evaluasi, analisis
+classifier, dan pembuatan lima figur. Jalankan dari folder repositori dan
+hentikan urutan jika salah satu perintah gagal.
+
+```powershell
+$env:STUDY_PROFILE = "smoke"
+.\.venv\Scripts\python.exe -m src.train
+.\.venv\Scripts\python.exe -m src.evaluate
+.\.venv\Scripts\python.exe -m src.mlp_analysis
+.\.venv\Scripts\python.exe -m src.figures
+```
+
+Untuk eksperimen penuh, set `$env:STUDY_PROFILE = "full"` dan jalankan ulang
+keempat perintah Python dalam urutan yang sama. Skrip memakai mode `full`
+secara default ketika variabel tersebut belum diatur. Fashion-MNIST diunduh
+pada eksekusi pertama. Setiap profil menyimpan hasil di folder terpisah di
+`generative_models_runs/`, termasuk tabel di `metrics/comparison.csv`,
+log di `logs/`, dan gambar di `figures/`. Angka di bagian Hasil utama berasal
+dari eksperimen penuh yang tersimpan di notebook.
 
 ## Interpretasi
 
